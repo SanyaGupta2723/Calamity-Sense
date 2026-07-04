@@ -35,6 +35,18 @@ if (!user) {
     { status: 401 }
   );
 }
+// Compare Password
+const isPasswordMatch = await bcrypt.compare(password, user.password);
+
+if (!isPasswordMatch) {
+  return NextResponse.json(
+    {
+      success: false,
+      message: "Invalid Email or Password",
+    },
+    { status: 401 }
+  );
+}
 // Generate JWT Token
 const token = jwt.sign(
   {
