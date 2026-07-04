@@ -9,15 +9,15 @@ export async function GET() {
       success: true,
       message: "MongoDB Connected Successfully",
     });
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+  console.error("MongoDB Error:", error);
 
-    return NextResponse.json(
-      {
-        success: false,
-        message: "Connection Failed",
-      },
-      { status: 500 }
-    );
-  }
+  return NextResponse.json(
+    {
+      success: false,
+      message: error.message,
+    },
+    { status: 500 }
+  );
+}
 }
