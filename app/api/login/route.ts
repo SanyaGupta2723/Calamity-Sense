@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
 
 import { connectDB } from "@/lib/mongodb";
 import User from "@/models/User";
@@ -59,11 +60,20 @@ const token = jwt.sign(
     expiresIn: "7d",
   }
 );
+const cookieStore = await cookies();
+
+cookieStore.set("token", token, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "lax",
+  maxAge: 60 * 60 * 24 * 7, // 7 days
+  path: "/",
+});
+
 return NextResponse.json(
   {
     success: true,
     message: "Login Successful",
-    token,
     user: {
       id: user._id,
       firstName: user.firstName,
@@ -75,7 +85,7 @@ return NextResponse.json(
     },
   },
   { status: 200 }
-);
+); 
 } catch (error) {
   console.error(error);
 
