@@ -6,28 +6,24 @@ export interface JwtPayload {
   role: string;
 }
 
-const JWT_SECRET = process.env.JWT_SECRET;
+function getJwtSecret(): string {
+  const secret = process.env.JWT_SECRET;
 
-if (!JWT_SECRET) {
-  throw new Error("❌ JWT_SECRET is not defined in .env.local");
+  if (!secret) {
+    throw new Error("JWT_SECRET is not defined in .env.local");
+  }
+
+  return secret;
 }
 
-/**
- * Generate JWT Token
- */
+// Generate JWT Token
 export function generateToken(payload: JwtPayload): string {
-  return jwt.sign(payload, JWT_SECRET, {
+  return jwt.sign(payload, getJwtSecret(), {
     expiresIn: "7d",
   });
 }
 
-/**
- * Verify JWT Token
- */
+// Verify JWT Token
 export function verifyToken(token: string): JwtPayload {
-  try {
-    return jwt.verify(token, JWT_SECRET) as JwtPayload;
-  } catch (error) {
-    throw new Error("Invalid or Expired Token");
-  }
+  return jwt.verify(token, getJwtSecret()) as JwtPayload;
 }
