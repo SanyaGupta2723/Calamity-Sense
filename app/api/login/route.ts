@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
+import { generateToken } from "@/lib/auth";
 
 import { connectDB } from "@/lib/mongodb";
 import User from "@/models/User";
@@ -60,18 +60,11 @@ export async function POST(req: NextRequest) {
       throw new Error("JWT_SECRET is not defined");
     }
 
-    // Generate JWT Token
-    const token = jwt.sign(
-      {
-        userId: user._id,
-        email: user.email,
-        role: user.role,
-      },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "7d",
-      }
-    );
+const token = generateToken({
+  userId: user._id.toString(),
+  email: user.email,
+  role: user.role,
+});
 
     // Store Token in HTTP Only Cookie
     const cookieStore = await cookies();
