@@ -1,21 +1,51 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import Report from "@/models/Report";
 
-export async function GET() {
+export async function PATCH(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     await connectDB();
 
-    const reports = await Report.find()
-      .populate("user", "firstName lastName email")
-      .populate("disaster", "title")
-      .sort({ createdAt: -1 });
+    const { id } = await params;
+    const { status } = await req.json();
+
+    if (!["Pending", "Approved", "Rejected"].includes(status)) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Invalid Status",
+        },
+        { status: 400 }
+      );
+    }
+
+    const report = await Report.findByIdAndUpdate(
+      id,
+      { status },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    if (!report) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Report not found",
+        },
+        { status: 404 }
+      );
+    }
 
     return NextResponse.json(
       {
         success: true,
-        count: reports.length,
-        reports,
+        message: `Report ${status} successfully`,
+        report,
       },
       { status: 200 }
     );
