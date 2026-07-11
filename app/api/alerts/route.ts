@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import Alert from "@/models/Alert";
 
+import "@/models/Disaster";
+import "@/models/Report";
+
 export async function GET() {
   try {
     await connectDB();
