@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import Report from "@/models/Report";
+import Alert from "@/models/Alert";
 
 export async function PATCH(
   req: NextRequest,
@@ -30,6 +31,18 @@ export async function PATCH(
         runValidators: true,
       }
     );
+
+    // Automatically create alert when report is approved
+if (report && status === "Approved") {
+  await Alert.create({
+    title: report.title,
+    description: report.description,
+    disaster: report.disaster,
+    report: report._id,
+    severity: report.severity,
+    location: report.address,
+  });
+}
 
     if (!report) {
       return NextResponse.json(
