@@ -32,16 +32,22 @@ export async function PATCH(
       }
     );
 
-    // Automatically create alert when report is approved
 if (report && status === "Approved") {
-  await Alert.create({
-    title: report.title,
-    description: report.description,
-    disaster: report.disaster,
+  // Check if alert already exists
+  const existingAlert = await Alert.findOne({
     report: report._id,
-    severity: report.severity,
-    location: report.address,
   });
+
+  if (!existingAlert) {
+    await Alert.create({
+      title: report.title,
+      description: report.description,
+      disaster: report.disaster,
+      report: report._id,
+      severity: report.severity,
+      location: report.address,
+    });
+  }
 }
 
     if (!report) {
