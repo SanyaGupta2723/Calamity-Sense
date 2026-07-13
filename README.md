@@ -6,7 +6,7 @@
 
 Instead of only reading theory, users actively engage through **guided learning modules**, **virtual disaster drills**, and **progress-based feedback**, making disaster education practical, engaging, and impactful.
 
-The platform focuses on both **Natural** and **Non‑Natural disasters**, ensuring users are better prepared for emergencies they may face in daily life.
+The platform focuses on both **Natural** and the **Non‑Natural disasters**, ensuring users are better prepared for emergencies they may face in daily life.
 
 ---
 
