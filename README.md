@@ -15,7 +15,7 @@ The platform focuses on both **Natural** and **Non‑Natural disasters**, ensuri
 
 ## 🎯 Purpose & Vision
 
-The main goal of CalamitySense is to:
+The main goal of CalamitySense is to :
 
 * Promote **disaster awareness and preparedness**
 * Provide **hands-on learning** through simulations
