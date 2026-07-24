@@ -223,7 +223,7 @@ npm run start
 
 ## 📄 License
 
-This project is created for the **educational purposes**. You are free to use, modify, and enhance it for learning or academic use.
+This project is created for **educational purposes**. You are free to use, modify, and enhance it for learning or academic use.
 
 ---
 
