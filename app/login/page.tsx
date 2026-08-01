@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import Link from "next/link"
 
 export default function LoginPage() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
     email: "",
@@ -20,7 +21,7 @@ export default function LoginPage() {
     role: "",
   })
 
-  const router = useRouter();
+ 
 
   const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
