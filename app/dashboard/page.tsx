@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useEffect } from "react";
 import { BookOpen, Trophy, Users, Calendar, Target, TrendingUp, Star, Zap, Gift } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -101,18 +102,17 @@ const recentActivities: RecentActivity[] = [
 export default function StudentDashboard() {
   const [selectedPeriod, setSelectedPeriod] = useState("week")
 
-  // Mock user data
-  const user = {
-    name: "Arjun Sharma",
-    grade: "10th Grade A",
-    school: "Delhi Public School",
-    avatar: "/placeholder.svg?height=40&width=40",
-    level: 12,
-    xp: 2450,
-    nextLevelXp: 3000,
-    weeklyXp: 350,
-    weeklyGoal: 500,
-  }
+const [user, setUser] = useState({
+  name: "",
+  grade: "",
+  school: "",
+  avatar: "/placeholder.svg?height=40&width=40",
+  level: 12,
+  xp: 2450,
+  nextLevelXp: 3000,
+  weeklyXp: 350,
+  weeklyGoal: 500,
+});
 
   const stats = {
     modulesCompleted: 4,
