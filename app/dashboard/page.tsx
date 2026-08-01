@@ -114,6 +114,34 @@ const [user, setUser] = useState({
   weeklyGoal: 500,
 });
 
+useEffect(() => {
+  const fetchUser = async () => {
+    try {
+      const response = await fetch("/api/me");
+
+      const data = await response.json();
+
+      if (data.success) {
+        setUser({
+          name: `${data.user.firstName} ${data.user.lastName}`,
+          grade: data.user.grade,
+          school: data.user.institution,
+          avatar: "/placeholder.svg?height=40&width=40",
+          level: 12,
+          xp: 2450,
+          nextLevelXp: 3000,
+          weeklyXp: 350,
+          weeklyGoal: 500,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  fetchUser();
+}, []);
+
   const stats = {
     modulesCompleted: 4,
     totalModules: 8,
