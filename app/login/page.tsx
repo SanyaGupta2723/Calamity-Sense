@@ -22,11 +22,40 @@ export default function LoginPage() {
 
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // TODO: Implement authentication logic
-    console.log("Login attempt:", formData)
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  try {
+    const response = await fetch("/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: formData.email,
+        password: formData.password,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      alert(data.message);
+      return;
+    }
+
+    alert("Login Successful ✅");
+
+    if (data.user.role === "admin") {
+      router.push("/admin/dashboard");
+    } else {
+      router.push("/dashboard");
+    }
+  } catch (error) {
+    console.error(error);
+    alert("Something went wrong.");
   }
+};
   
   
 
