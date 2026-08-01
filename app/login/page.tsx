@@ -20,11 +20,15 @@ export default function LoginPage() {
     role: "",
   })
 
+  const router = useRouter();
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     // TODO: Implement authentication logic
     console.log("Login attempt:", formData)
   }
+  
+  
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
