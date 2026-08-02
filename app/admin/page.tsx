@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {
   Users,
   BookOpen,
@@ -139,6 +139,16 @@ const mockClasses: ClassData[] = [
 export default function AdminDashboard() {
   const [selectedTimeframe, setSelectedTimeframe] = useState("30d")
   const [selectedGrade, setSelectedGrade] = useState("all")
+
+  const [dashboard, setDashboard] = useState({
+  totalUsers: 0,
+  totalReports: 0,
+  approvedReports: 0,
+  pendingReports: 0,
+  rejectedReports: 0,
+  activeAlerts: 0,
+  totalDisasters: 0,
+});
 
   const totalStudents = mockStudents.length
   const activeStudents = mockStudents.filter((s) => s.status === "active").length
