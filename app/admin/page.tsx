@@ -150,6 +150,22 @@ export default function AdminDashboard() {
   totalDisasters: 0,
 });
 
+useEffect(() => {
+  const fetchDashboard = async () => {
+    try {
+      const response = await fetch("/api/dashboard");
+      const data = await response.json();
+
+      if (data.success) {
+        setDashboard(data.dashboard);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  fetchDashboard();
+}, []);
   const totalStudents = mockStudents.length
   const activeStudents = mockStudents.filter((s) => s.status === "active").length
   const atRiskStudents = mockStudents.filter((s) => s.status === "at-risk").length
@@ -165,7 +181,7 @@ export default function AdminDashboard() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <Link href="/" className="flex items-center gap-2">
-                <Shield className="h-6 w-6 text-primary" />
+                <Bell className="h-6 w-6 text-primary" />
                 <span className="font-semibold">CalamitySense</span>
               </Link>
               <span className="text-muted-foreground">/</span>
@@ -229,8 +245,8 @@ export default function AdminDashboard() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Total Students</p>
-                  <p className="text-3xl font-bold">{totalStudents}</p>
+                  <p className="text-sm font-medium text-muted-foreground">Total Users</p>
+                  <p className="text-3xl font-bold">{dashboard.totalUsers}</p>
                 </div>
                 <Users className="h-8 w-8 text-blue-500" />
               </div>
@@ -246,10 +262,15 @@ export default function AdminDashboard() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Active Students</p>
-                  <p className="text-3xl font-bold">{activeStudents}</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+  Total Reports
+</p>
+
+<p className="text-3xl font-bold">
+  {dashboard.totalReports}
+</p>
                 </div>
-                <BookOpen className="h-8 w-8 text-green-500" />
+                <BarChart3 className="h-8 w-8 text-green-500" />
               </div>
               <div className="mt-4 flex items-center text-sm">
                 <span className="text-muted-foreground">
@@ -263,8 +284,13 @@ export default function AdminDashboard() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">At-Risk Students</p>
-                  <p className="text-3xl font-bold">{atRiskStudents}</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+  Approved Reports
+</p>
+
+<p className="text-3xl font-bold">
+  {dashboard.approvedReports}
+</p>
                 </div>
                 <AlertTriangle className="h-8 w-8 text-yellow-500" />
               </div>
@@ -278,8 +304,13 @@ export default function AdminDashboard() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Avg. Preparedness</p>
-                  <p className="text-3xl font-bold">{averagePreparedness}%</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+  Active Alerts
+</p>
+
+<p className="text-3xl font-bold">
+  {dashboard.activeAlerts}
+</p>
                 </div>
                 <Shield className="h-8 w-8 text-primary" />
               </div>
