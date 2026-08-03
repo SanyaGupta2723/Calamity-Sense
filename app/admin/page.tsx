@@ -136,6 +136,8 @@ const mockClasses: ClassData[] = [
   },
 ]
 
+
+const [reports, setReports] = useState([]);
 export default function AdminDashboard() {
   const [selectedTimeframe, setSelectedTimeframe] = useState("30d")
   const [selectedGrade, setSelectedGrade] = useState("all")
@@ -159,6 +161,12 @@ useEffect(() => {
       if (data.success) {
         setDashboard(data.dashboard);
       }
+      const reportResponse = await fetch("/api/admin/reports");
+const reportData = await reportResponse.json();
+
+if (reportData.success) {
+  setReports(reportData.reports);
+}
     } catch (error) {
       console.error(error);
     }
